@@ -17,6 +17,7 @@ import (
 	"fmt"
 	"testing"
 	"github.com/mikhail-nikitin/go-font/font"
+	assert "github.com/pilu/miniassert"
 )
 
 func TestFont(t *testing.T) {
@@ -30,6 +31,26 @@ func TestDefaultFont(t *testing.T) {
 	if emptyFont.Family() != "sans-serif" || emptyFont.Size() != 14 {
 		t.Fatalf("#9 emptyFont must be sans-serif 14, but found %s", emptyFont)
 	}
+}
+
+func TestSizePropertyValidation(t *testing.T) {
+	subject := font.New("family", 5)
+	subject.SetSize(4)
+	assert.Equal(t, subject.Size(), 5)
+
+	subject = font.New("family", 5)
+	subject.SetSize(144)
+	assert.Equal(t, subject.Size(), 144)
+
+	subject = font.New("family", 5)
+	subject.SetSize(145)
+	assert.Equal(t, subject.Size(), 5)
+}
+
+func TestFontFamilyPropertyValidation(t *testing.T) {
+	subject := font.New("family", 10)
+	subject.SetFamily("")
+	assert.Equal(t, subject.Family(), "family")
 }
 
 func f1(bodyFont, titleFont *font.Font, t *testing.T) {

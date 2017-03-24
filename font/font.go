@@ -29,7 +29,7 @@ func (f *Font) Size() int {
 }
 
 func (f *Font) SetSize(size int) *Font {
-	if size > 0 {
+	if size >= 5 && size <= 144 {
 		f.size = size
 	}
 	return f
